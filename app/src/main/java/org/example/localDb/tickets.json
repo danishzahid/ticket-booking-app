@@ -1,0 +1,36 @@
+[
+  {
+    "ticketId": "T1001",
+    "userId": "12345",
+    "source": "Mumbai",
+    "destination": "Delhi",
+    "dateOfJourney": "2025-04-10",
+    "train": {
+      "trainId": "1001",
+      "trainNo": "Rajdhani Express",
+      "seats": [
+        [0, 0, 0, 0, 1, 0],
+        [0, 1, 0, 1, 0, 0],
+        [0, 0, 0, 0, 0, 0]
+      ],
+      "stations": ["Mumbai", "Vadodara", "Delhi"]
+    }
+  },
+  {
+    "ticketId": "T1002",
+    "userId": "67890",
+    "source": "Chennai",
+    "destination": "Hyderabad",
+    "dateOfJourney": "2025-04-11",
+    "train": {
+      "trainId": "1002",
+      "trainNo": "Shatabdi Express",
+      "seats": [
+        [1, 0, 0, 1, 0, 0],
+        [0, 0, 1, 0, 1, 1],
+        [0, 0, 0, 0, 0, 0]
+      ],
+      "stations": ["Chennai", "Bangalore", "Hyderabad"]
+    }
+  }
+]

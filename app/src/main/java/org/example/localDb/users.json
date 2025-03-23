@@ -1,0 +1,36 @@
+[
+  {
+    "userId": "12345",
+    "userName": "Danish",
+    "password": "mypassword",
+    "hashedPassword": "abc12345",
+    "ticketsBooked": [
+      {
+        "ticketId": "TKT67890",
+        "userId": "12345",
+        "source": "Mumbai",
+        "destination": "Delhi",
+        "dateOfJourney": "2025-04-10T00:00:00Z",
+        "train": {
+          "trainId": "56789",
+          "trainNo": "Rajdhani Express",
+          "seats": [
+            [0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 1, 0, 0]
+          ],
+          "stationTimes": {
+            "Mumbai": "2025-04-10T06:00:00Z",
+            "Vadodara": "2025-04-10T12:00:00Z",
+            "Delhi": "2025-04-10T18:00:00Z"
+          },
+          "stations": [
+            "Mumbai",
+            "Vadodara",
+            "Delhi"
+          ]
+        }
+      }
+    ]
+  }
+]
