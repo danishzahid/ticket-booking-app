@@ -14,9 +14,30 @@
           "trainId": "56789",
           "trainNo": "Rajdhani Express",
           "seats": [
-            [0, 0, 0, 0, 0, 0],
-            [0, 1, 0, 0, 0, 0],
-            [0, 0, 0, 1, 0, 0]
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ]
           ],
           "stationTimes": {
             "Mumbai": "2025-04-10T06:00:00Z",
@@ -31,5 +52,11 @@
         }
       }
     ]
+  },
+  {
+    "userId": null,
+    "userName": "zahid",
+    "passwordHash": "$2a$12$QZHrmV2omtrWLsl.sQBtceUlsNnc0yGJ8p1WgC/tTL.c1aipfJOUq",
+    "ticketsBooked": null
   }
 ]
