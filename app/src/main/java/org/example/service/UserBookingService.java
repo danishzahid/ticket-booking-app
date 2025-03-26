@@ -18,7 +18,9 @@ import java.util.Optional;
 public class UserBookingService {
     private static final String USER_PATH = "app/src/main/java/org/example/localDb/users.json"; // Adjusted path
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final String TICKET_PATH = "app/src/main/java/org/example/localDb/trains.json";
+    private static final String TICKET_PATH = "app/src/main/java/org/example/localDb/tickets.json";
+    private static final String TRAIN_PATH = "app/src/main/java/org/example/localDb/trains.json"; // Train data path
+
 
     /**
      * Retrieves all users from the JSON file.
@@ -45,7 +47,7 @@ public class UserBookingService {
             // Check if user already exists
             for (User user : users) {
                 if (user.getUserName().equalsIgnoreCase(newUser.getUserName())) {
-                    System.out.println("❌ Username already taken!");
+                    System.out.println("Username already taken!");
                     return;
                 }
             }
@@ -58,7 +60,7 @@ public class UserBookingService {
             users.add(newUser);
             objectMapper.writeValue(new File(USER_PATH), users);
 
-            System.out.println("✅ Signup successful!");
+            System.out.println("Signup successful!");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -79,16 +81,16 @@ public class UserBookingService {
                 if (user.getUserName().equalsIgnoreCase(userName)) {
                     // Check if the entered password matches the stored hashed password
                     if (PasswordUtil.checkPassword(password, user.getPasswordHash())) {
-                        System.out.println("✅ Login successful!");
+                        System.out.println("Login successful!");
                         return true;
                     } else {
-                        System.out.println("❌ Incorrect password!");
+                        System.out.println("Incorrect password!");
                         return false;
                     }
                 }
             }
 
-            System.out.println("❌ User not found!");
+            System.out.println("User not found!");
             return false;
         } catch (IOException e) {
             e.printStackTrace();
@@ -135,10 +137,98 @@ public class UserBookingService {
                     return;
                 }
             }
-            System.out.println("❌ Ticket not found!");
+            System.out.println("Ticket not found!");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    /**
+     * Fetches all bookings for a specific user.
+     * @param userId User ID.
+     */
+    public void fetchBookings(String userId) {
+        try {
+            List<Ticket> tickets = objectMapper.readValue(new File(TICKET_PATH), new TypeReference<List<Ticket>>() {});
+            List<Ticket> userTickets = new ArrayList<>();
+
+            for (Ticket ticket : tickets) {
+                if (ticket.getUserId().equals(userId)) {
+                    userTickets.add(ticket);
+                }
+            }
+
+            if (userTickets.isEmpty()) {
+                System.out.println("No bookings found for user ID: " + userId);
+                return;
+            }
+
+            System.out.println("🎟 User Bookings:");
+            for (Ticket ticket : userTickets) {
+                System.out.println("Ticket ID: " + ticket.getTicketId() +
+                        " | Source: " + ticket.getSource() +
+                        " | Destination: " + ticket.getDestination() +
+                        " | Date: " + ticket.getDateOfJourney());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Cancels a ticket booking for a user.
+     * @param ticketId Ticket ID.
+     */
+    public void cancelBooking(String ticketId) {
+        try {
+            List<Ticket> tickets = objectMapper.readValue(new File(TICKET_PATH), new TypeReference<List<Ticket>>() {});
+            Optional<Ticket> ticketToRemove = tickets.stream().filter(t -> t.getTicketId().equals(ticketId)).findFirst();
+
+            if (ticketToRemove.isPresent()) {
+                tickets.remove(ticketToRemove.get());
+                saveTickets(tickets); // Save the updated ticket list
+                System.out.println("Ticket " + ticketId + " has been canceled.");
+            } else {
+                System.out.println("Ticket not found!");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Fetches train details from local database.
+     * @param trainId Train ID.
+     */
+    public void getTrainInfo(String trainId) {
+        try {
+            List<Ticket> trains = objectMapper.readValue(new File(TRAIN_PATH), new TypeReference<List<Ticket>>() {});
+            for (Ticket train : trains) {
+                if (train.getTicketId().equals(trainId)) { // Assuming Train ID is stored as Ticket ID (Adjust if needed)
+                    System.out.println("🚆 Train Details:");
+                    System.out.println("Train ID: " + train.getTicketId());
+                    System.out.println("Source: " + train.getSource());
+                    System.out.println("Destination: " + train.getDestination());
+                    System.out.println("Date of Journey: " + train.getDateOfJourney());
+                    return;
+                }
+            }
+            System.out.println("Train not found!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Saves the updated ticket list after modifications (e.g., cancellations).
+     * @param tickets List of tickets.
+     */
+    private void saveTickets(List<Ticket> tickets) {
+        try {
+            objectMapper.writeValue(new File(TICKET_PATH), tickets);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
