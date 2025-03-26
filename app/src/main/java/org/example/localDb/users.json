@@ -2,8 +2,7 @@
   {
     "userId": "12345",
     "userName": "Danish",
-    "password": "mypassword",
-    "hashedPassword": "abc12345",
+    "passwordHash": "abc12345",
     "ticketsBooked": [
       {
         "ticketId": "TKT67890",
